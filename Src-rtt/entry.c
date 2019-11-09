@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <entry.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,6 +33,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_R_PIN    GET_PIN(B, 12)
+#define LED_G_PIN    GET_PIN(B, 11)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,6 +49,9 @@ DMA_HandleTypeDef hdma_adc1;
 
 SPI_HandleTypeDef hspi2;
 
+UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
+
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
@@ -59,8 +64,9 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_SPI2_Init(void);
-static void MX_DMA_Init(void);
-static void MX_USB_PCD_Init(void);
+//static void MX_DMA_Init(void);
+//static void MX_USART1_UART_Init(void);
+//static void MX_USB_PCD_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -102,16 +108,21 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_SPI2_Init();
-  MX_DMA_Init();
-  MX_USB_PCD_Init();
+//  MX_DMA_Init();
+//  MX_USART1_UART_Init();
+//  MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
-
+  rt_pin_mode(LED_R_PIN, PIN_MODE_OUTPUT);
+  rt_pin_mode(LED_G_PIN, PIN_MODE_OUTPUT);
+  rt_pin_write(LED_R_PIN, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    rt_pin_write(LED_G_PIN, !rt_pin_read(LED_G_PIN));
+    rt_thread_delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -317,51 +328,87 @@ static void MX_SPI2_Init(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+//static void MX_USART1_UART_Init(void)
+//{
+//
+//  /* USER CODE BEGIN USART1_Init 0 */
+//
+//  /* USER CODE END USART1_Init 0 */
+//
+//  /* USER CODE BEGIN USART1_Init 1 */
+//
+//  /* USER CODE END USART1_Init 1 */
+//  huart1.Instance = USART1;
+//  huart1.Init.BaudRate = 115200;
+//  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+//  huart1.Init.StopBits = UART_STOPBITS_1;
+//  huart1.Init.Parity = UART_PARITY_NONE;
+//  huart1.Init.Mode = UART_MODE_TX_RX;
+//  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+//  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+//  if (HAL_UART_Init(&huart1) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN USART1_Init 2 */
+//
+//  /* USER CODE END USART1_Init 2 */
+//
+//}
+
+/**
   * @brief USB Initialization Function
   * @param None
   * @retval None
   */
-static void MX_USB_PCD_Init(void)
-{
-
-  /* USER CODE BEGIN USB_Init 0 */
-
-  /* USER CODE END USB_Init 0 */
-
-  /* USER CODE BEGIN USB_Init 1 */
-
-  /* USER CODE END USB_Init 1 */
-  hpcd_USB_FS.Instance = USB;
-  hpcd_USB_FS.Init.dev_endpoints = 8;
-  hpcd_USB_FS.Init.speed = PCD_SPEED_FULL;
-  hpcd_USB_FS.Init.low_power_enable = DISABLE;
-  hpcd_USB_FS.Init.lpm_enable = DISABLE;
-  hpcd_USB_FS.Init.battery_charging_enable = DISABLE;
-  if (HAL_PCD_Init(&hpcd_USB_FS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_Init 2 */
-
-  /* USER CODE END USB_Init 2 */
-
-}
+//static void MX_USB_PCD_Init(void)
+//{
+//
+//  /* USER CODE BEGIN USB_Init 0 */
+//
+//  /* USER CODE END USB_Init 0 */
+//
+//  /* USER CODE BEGIN USB_Init 1 */
+//
+//  /* USER CODE END USB_Init 1 */
+//  hpcd_USB_FS.Instance = USB;
+//  hpcd_USB_FS.Init.dev_endpoints = 8;
+//  hpcd_USB_FS.Init.speed = PCD_SPEED_FULL;
+//  hpcd_USB_FS.Init.low_power_enable = DISABLE;
+//  hpcd_USB_FS.Init.lpm_enable = DISABLE;
+//  hpcd_USB_FS.Init.battery_charging_enable = DISABLE;
+//  if (HAL_PCD_Init(&hpcd_USB_FS) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN USB_Init 2 */
+//
+//  /* USER CODE END USB_Init 2 */
+//
+//}
 
 /** 
   * Enable DMA controller clock
   */
-static void MX_DMA_Init(void) 
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-
-}
+//static void MX_DMA_Init(void) 
+//{
+//
+//  /* DMA controller clock enable */
+//  __HAL_RCC_DMA1_CLK_ENABLE();
+//
+//  /* DMA interrupt init */
+//  /* DMA1_Channel1_IRQn interrupt configuration */
+//  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+//  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+//  /* DMA1_Channel5_IRQn interrupt configuration */
+//  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
+//  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+//
+//}
 
 /**
   * @brief GPIO Initialization Function

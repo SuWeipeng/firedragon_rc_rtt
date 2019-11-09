@@ -11,11 +11,49 @@ common:
   - Drivers/STM32F1xx_HAL_Driver/Inc
   - Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
   - Inc
+  - Libraries
+  - Libraries/rt-thread
+  - Libraries/rt-thread/board-f103c8
+  - Libraries/rt-thread/components
+  - Libraries/rt-thread/components/drivers
+  - Libraries/rt-thread/components/drivers/include
+  - Libraries/rt-thread/components/drivers/include/drivers/pin.h
+  - Libraries/rt-thread/components/drivers/include/drivers/serial.h
+  #- Libraries/rt-thread/components/drivers/include/drivers/usb_common.h
+  #- Libraries/rt-thread/components/drivers/include/drivers/usb_device.h
+  #- Libraries/rt-thread/components/drivers/include/ipc/ringbuffer.h
+  - Libraries/rt-thread/components/finsh
+  - Libraries/rt-thread/HAL_Drivers
+  - Libraries/rt-thread/HAL_Drivers/config
+  - Libraries/rt-thread/HAL_Drivers/config/f1
+  - Libraries/rt-thread/include
+  - Libraries/rt-thread/include/libc
   sources:
     Drivers:
     - Drivers/STM32F1xx_HAL_Driver/Src
+    RTThread:
+    - Drivers/RTT_Driver/Src
+    - Libraries/rt-thread/board-f103c8
+    - Libraries/rt-thread/components/drivers/misc/pin.c
+    - Libraries/rt-thread/components/drivers/serial/serial.c
+    - Libraries/rt-thread/components/drivers/src/completion.c
+    - Libraries/rt-thread/components/drivers/src/dataqueue.c
+    #- Libraries/rt-thread/components/drivers/src/ringbuffer.c
+    - Libraries/rt-thread/components/finsh/cmd.c
+    - Libraries/rt-thread/components/finsh/msh.c
+    - Libraries/rt-thread/components/finsh/msh_cmd.c
+    - Libraries/rt-thread/components/finsh/msh_file.c
+    - Libraries/rt-thread/components/finsh/shell.c
+    - Libraries/rt-thread/components/finsh/symbol.c
+    - Libraries/rt-thread/HAL_Drivers
+    - Libraries/rt-thread/libcpu/arm/cortex-m3/cpuport.c
+    - Libraries/rt-thread/src
     Src:
     - Src-rtt
+    #VCom:
+    #- Libraries/rt-thread/components/drivers/usb/usbdevice/core/core.c
+    #- Libraries/rt-thread/components/drivers/usb/usbdevice/core/usbdevice.c
+    #- Libraries/rt-thread/components/drivers/usb/usbdevice/class/cdc_vcom.c
   target:
   - stm32f103c8
 tool_specific:
@@ -26,6 +64,8 @@ tool_specific:
     sources:
       StartUp:
       - IDE/IAR
+      RTThread:
+      - Libraries/rt-thread/libcpu/arm/cortex-m3/context_iar.S
     linker_file:
     - IDE/IAR/stm32f103xb_flash.icf
   make_gcc_arm:
@@ -35,8 +75,38 @@ tool_specific:
     sources:
       StartUp:
       - IDE/GCC/startup_stm32f103xb-rtt.S
+      RTThread:
+      - Libraries/rt-thread/libcpu/arm/cortex-m3/context_gcc.S
     linker_file:
     - IDE/GCC/STM32F103C8Tx_FLASH.ld
+    misc:
+      standard_libraries:
+      - m
+      - gcc
+      - c
+      - nosys
+      - stdc++
+      common_flags:
+      - -O0
+      - -g
+      - -ggdb
+      - -Wall
+      - -fno-strict-aliasing
+      - -ffunction-sections
+      - -fdata-sections
+      - -fno-exceptions
+      - -fno-delete-null-pointer-checks
+      - -fmessage-length=0
+      - -fno-builtin
+      - -mthumb
+      ld_flags:
+      - -specs=nano.specs
+      - -Wl,--gc-sections
+      cxx_flags:
+      - -fno-rtti
+      - -std=gnu++98
+      c_flags:
+      - -std=c99
   uvision5:
     macros:
     - USE_HAL_DRIVER
@@ -44,5 +114,7 @@ tool_specific:
     sources:
       StartUp:
       - IDE/MDK5
+      RTThread:
+      - Libraries/rt-thread/libcpu/arm/cortex-m3/context_rvds.S
     linker_file:
     - IDE/MDK5/stm32f103c8.sct
