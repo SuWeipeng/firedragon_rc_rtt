@@ -1,0 +1,39 @@
+common:
+  includes:
+  - Drivers
+  - Drivers/CMSIS
+  - Drivers/CMSIS/Device
+  - Drivers/CMSIS/Device/ST
+  - Drivers/CMSIS/Device/ST/STM32F1xx
+  - Drivers/CMSIS/Device/ST/STM32F1xx/Include
+  - Drivers/CMSIS/Include
+  - Drivers/STM32F1xx_HAL_Driver
+  - Drivers/STM32F1xx_HAL_Driver/Inc
+  - Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+  - Inc
+  sources:
+    Drivers:
+    - Drivers/STM32F1xx_HAL_Driver/Src
+    Src:
+    - Src-rtt
+  target:
+  - stm32f103c8
+tool_specific:
+  iar_arm:
+    sources:
+      StartUp:
+      - IDE/IAR
+    linker_file:
+    - IDE/IAR/stm32f103xb_flash.icf
+  make_gcc_arm:
+    sources:
+      StartUp:
+      - IDE/GCC/startup_stm32f103xb-rtt.S
+    linker_file:
+    - IDE/GCC/STM32F103C8Tx_FLASH.ld
+  uvision5:
+    sources:
+      StartUp:
+      - IDE/MDK5
+    linker_file:
+    - IDE/MDK5/stm32f103c8.sct
