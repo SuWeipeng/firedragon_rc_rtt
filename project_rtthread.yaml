@@ -20,18 +20,27 @@ common:
   - stm32f103c8
 tool_specific:
   iar_arm:
+    macros:
+    - USE_HAL_DRIVER
+    - STM32F103xB 
     sources:
       StartUp:
       - IDE/IAR
     linker_file:
     - IDE/IAR/stm32f103xb_flash.icf
   make_gcc_arm:
+    macros:
+    - USE_HAL_DRIVER
+    - STM32F103xB 
     sources:
       StartUp:
       - IDE/GCC/startup_stm32f103xb-rtt.S
     linker_file:
     - IDE/GCC/STM32F103C8Tx_FLASH.ld
   uvision5:
+    macros:
+    - USE_HAL_DRIVER
+    - STM32F103xB 
     sources:
       StartUp:
       - IDE/MDK5
