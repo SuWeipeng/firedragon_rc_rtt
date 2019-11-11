@@ -55,7 +55,7 @@ common:
     - Libraries/rt-thread/components/drivers/usb/usbdevice/core/usbdevice.c
     - Libraries/rt-thread/components/drivers/usb/usbdevice/class/cdc_vcom.c
   target:
-  - stm32f103c8
+  - stm32f103cb
 tool_specific:
   iar_arm:
     macros:
@@ -117,4 +117,4 @@ tool_specific:
       RTThread:
       - Libraries/rt-thread/libcpu/arm/cortex-m3/context_rvds.S
     linker_file:
-    - IDE/MDK5/stm32f103c8.sct
+    - IDE/MDK5/stm32f103cb.sct
