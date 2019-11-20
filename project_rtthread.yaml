@@ -29,6 +29,8 @@ common:
   - Libraries/rt-thread/HAL_Drivers/config/f1
   - Libraries/rt-thread/include
   - Libraries/rt-thread/include/libc
+  - packages/nrf24l01-latest/src
+  - packages/nrf24l01-latest/examples
   sources:
     Drivers:
     - Drivers/STM32F1xx_HAL_Driver/Src
@@ -52,6 +54,8 @@ common:
     - Libraries/rt-thread/libcpu/arm/cortex-m3/cpuport.c
     - Libraries/rt-thread/src
     Src:
+    - packages/nrf24l01-latest/src
+    - packages/nrf24l01-latest/examples/sample_irq_prx.c
     - Src-rtt
     VCom:
     - Libraries/rt-thread/components/drivers/usb/usbdevice/core/core.c
