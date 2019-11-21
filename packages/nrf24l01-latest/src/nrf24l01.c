@@ -558,9 +558,7 @@ int nrf24_init(nrf24_cfg_t *pt)
 
     hal_nrf24l01_port.init(pt->ud);
 
-    rt_enter_critical();
-    HAL_Delay(5);
-    rt_exit_critical();
+    rt_thread_delay(1);
 
     send_activate_command(); // it doesn't work?
 
