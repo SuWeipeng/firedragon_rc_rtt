@@ -12,6 +12,8 @@ common:
   - Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
   - Inc
   - Libraries
+  - Libraries/mavlink
+  - Libraries/mavlink/car
   - Libraries/rt-thread
   - Libraries/rt-thread/board-f103c8
   - Libraries/rt-thread/components
@@ -55,7 +57,6 @@ common:
     - Libraries/rt-thread/src
     Src:
     - packages/nrf24l01-latest/src
-    - packages/nrf24l01-latest/examples/sample_irq_prx.c
     - Src-rtt
     VCom:
     - Libraries/rt-thread/components/drivers/usb/usbdevice/core/core.c
