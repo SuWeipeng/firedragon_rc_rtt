@@ -1,10 +1,10 @@
-#include <rtthread.h>
+#include <entry.h>
 #include <stdio.h>
 #include "nrf24l01.h"
 #include "mavlink.h"
 #include "sample.h"
 
-#define MAVLINK_VCOM_DEBUG 1
+#define MAVLINK_VCOM_DEBUG 0
 #define GET_BIT(value, i) ((value)>>i)
 
 
@@ -64,7 +64,6 @@ void nrf24l01_mavlink_entry(void *param)
             rt_device_write(vcom, 0, buf, rt_strlen(buf));
 #endif
             
-
             mavlink_message_t msg_ack;
             mavlink_msg_velocity_pack(0, 0, &msg_ack, vel.vel_x, vel.vel_y, vel.rad_z);
             tlen = mavlink_msg_to_send_buffer((uint8_t *)tbuf, &msg_ack);
@@ -113,10 +112,9 @@ static void _nrf24_param_set(nrf24_cfg_t *pt)
 
 static int nrf24l01_mavlink_init(void)
 {
-  rt_thread_t thread;
+  rt_thread_t nrf_mav_thread;
 
-  thread = rt_thread_create("nrf_mav", nrf24l01_mavlink_entry, RT_NULL, 1024+512 , 3, 20);
-  rt_thread_startup(thread);
+  RTT_CREATE(nrf_mav, nrf24l01_mavlink_entry, RT_NULL, 1536 , 3, 20)
 
   return RT_EOK;
 }
