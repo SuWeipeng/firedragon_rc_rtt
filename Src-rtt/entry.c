@@ -55,7 +55,7 @@ DMA_HandleTypeDef hdma_usart1_rx;
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
-
+rt_device_t vcom = RT_NULL;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,13 +116,10 @@ int main(void)
   rt_pin_mode(LED_G_PIN, PIN_MODE_OUTPUT);
   rt_pin_write(LED_R_PIN, 1);
   
-  rt_device_t dev = RT_NULL;
-  char buf[] = "hello RT-Thread!\r\n";
+  vcom = rt_device_find("vcom");
   
-  dev = rt_device_find("vcom");
-  
-  if (dev)
-    rt_device_open(dev, RT_DEVICE_FLAG_RDWR);
+  if (vcom)
+    rt_device_open(vcom, RT_DEVICE_FLAG_RDWR);
   else
     return -RT_ERROR;
   /* USER CODE END 2 */
@@ -132,7 +129,6 @@ int main(void)
   while (1)
   {
     rt_pin_write(LED_G_PIN, !rt_pin_read(LED_G_PIN));
-    rt_device_write(dev, 0, buf, rt_strlen(buf));
     rt_thread_delay(500);
     /* USER CODE END WHILE */
 
