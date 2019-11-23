@@ -12,8 +12,10 @@ common:
   - Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
   - Inc
   - Libraries
+  - Libraries/AP_Math
   - Libraries/mavlink
   - Libraries/mavlink/car
+  - Libraries/RC_Channel
   - Libraries/rt-thread
   - Libraries/rt-thread/board-f103c8
   - Libraries/rt-thread/components
@@ -37,8 +39,10 @@ common:
   sources:
     Drivers:
     - Drivers/STM32F1xx_HAL_Driver/Src
+    Library:
+    - Libraries/AP_Math
+    - Libraries/RC_Channel
     RTThread:
-    - Drivers/RTT_Driver/Src
     - Libraries/rt-thread/board-f103c8
     - Libraries/rt-thread/components/cplusplus/MutexCPP.cpp
     - Libraries/rt-thread/components/cplusplus/SemaphoreCPP.cpp

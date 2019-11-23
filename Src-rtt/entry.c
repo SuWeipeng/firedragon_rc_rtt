@@ -68,7 +68,8 @@ static void MX_ADC2_Init(void);
 //static void MX_USART1_UART_Init(void);
 //static void MX_USB_PCD_Init(void);
 /* USER CODE BEGIN PFP */
-
+void setup(void);
+void loop(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -112,6 +113,7 @@ int main(void)
 //  MX_USART1_UART_Init();
 //  MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
+  setup();
   rt_pin_mode(LED_R_PIN, PIN_MODE_OUTPUT);
   rt_pin_mode(LED_G_PIN, PIN_MODE_OUTPUT);
   rt_pin_write(LED_R_PIN, 1);
@@ -128,6 +130,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    loop();
     rt_pin_write(LED_G_PIN, !rt_pin_read(LED_G_PIN));
     rt_thread_delay(500);
     /* USER CODE END WHILE */

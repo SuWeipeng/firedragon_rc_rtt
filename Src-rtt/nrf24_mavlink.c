@@ -3,6 +3,7 @@
 #include "nrf24l01.h"
 #include "mavlink.h"
 #include "sample.h"
+#include "rtt_interface.h"
 
 #define MAVLINK_VCOM_DEBUG 0
 #define GET_BIT(value, i) ((value)>>i)
@@ -11,12 +12,6 @@
 #if MAVLINK_VCOM_DEBUG == 1
 extern rt_device_t vcom;
 #endif
-
-typedef struct vel_target {
-  float vel_x; // m/s
-  float vel_y; // m/s
-  float rad_z; // rad/s
-} vel_target;
 
 static rt_sem_t nrfirq_sem;
 
