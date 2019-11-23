@@ -1,7 +1,7 @@
 #ifndef __RC_CHANNEL__
 #define __RC_CHANNEL__
 
-#include <stm32f1xx_hal.h>
+#include <stdint.h>
 #include "rtt_interface.h"
 
 #define RC_MODE_1
@@ -9,7 +9,7 @@
 #define ADC_CHANNEL_CNT 4
 #define ADC_BUFF_LEN    ADC_CHANNEL_CNT*2
 #define ADC_DEAD_ZONE   300
-#define ADC_VCOM_DEBUG   2
+#define ADC_VCOM_DEBUG  1
 
 #define ADC_CHANNEL_X_MID 1985
 #define ADC_CHANNEL_Y_MID 1960
@@ -25,7 +25,7 @@
 class RC_Channel
 {
 public:
-  RC_Channel(ADC_HandleTypeDef* hadc);
+  RC_Channel();
   ~RC_Channel() {}
   
   void     adc_update(void);
@@ -35,7 +35,6 @@ public:
   float    rad_z(int8_t inv = 1);
   
 private:
-  ADC_HandleTypeDef* _hadc;
   uint32_t           _adc_buf[ADC_BUFF_LEN];
 };
 

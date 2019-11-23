@@ -7,18 +7,52 @@
 extern rt_device_t vcom;
 #endif
 
-RC_Channel::RC_Channel(ADC_HandleTypeDef* hadc)
-  : _hadc(hadc)
+#define ADC_DEV_NAME        "adc1"
+#define ADC_X_MODE1_CHANNEL 7
+#define ADC_X_MODE2_CHANNEL 4
+#define ADC_Y_CHANNEL       6
+#define ADC_Z_CHANNEL       5
+
+RC_Channel::RC_Channel()
 {
-  HAL_ADC_Start_DMA(_hadc, _adc_buf, ADC_BUFF_LEN);
+
 }
 
 uint32_t RC_Channel::get_value(uint8_t channel)
 {
+  rt_adc_device_t adc_dev;
+  
+  adc_dev = (rt_adc_device_t)rt_device_find(ADC_DEV_NAME);
+  if (adc_dev == RT_NULL)
+  {
+    rt_kprintf("adc sample run failed! can't find %s device!\n", ADC_DEV_NAME);
+    return RT_ERROR;
+  }
+
+  rt_adc_enable(adc_dev, ADC_X_MODE1_CHANNEL);
+  _adc_buf[3] = rt_adc_read(adc_dev, ADC_X_MODE1_CHANNEL);
+  rt_adc_disable(adc_dev, ADC_X_MODE1_CHANNEL);
+  
+  rt_adc_enable(adc_dev, ADC_X_MODE2_CHANNEL);
+  _adc_buf[0] = rt_adc_read(adc_dev, ADC_X_MODE2_CHANNEL);
+  rt_adc_disable(adc_dev, ADC_X_MODE2_CHANNEL);
+  
+  rt_adc_enable(adc_dev, ADC_Y_CHANNEL);
+  _adc_buf[2] = rt_adc_read(adc_dev, ADC_Y_CHANNEL);
+  rt_adc_disable(adc_dev, ADC_Y_CHANNEL);
+  
+  rt_adc_enable(adc_dev, ADC_Z_CHANNEL);
+  _adc_buf[1] = rt_adc_read(adc_dev, ADC_Z_CHANNEL);
+  rt_adc_disable(adc_dev, ADC_Z_CHANNEL);
+
   if(channel > ADC_CHANNEL_CNT -1) return 0;
 #if ADC_VCOM_DEBUG == 2  
   char buf[30];
+#if defined(RC_MODE_1)
   sprintf(buf, "x:%d, y:%d, z:%d\r\n", _adc_buf[0], _adc_buf[2], _adc_buf[1]);
+#else
+  sprintf(buf, "x:%d, y:%d, z:%d\r\n", _adc_buf[3], _adc_buf[2], _adc_buf[1]);
+#endif
   rt_device_write(vcom, 0, buf, rt_strlen(buf));
 #endif  
   return _adc_buf[channel];
@@ -26,6 +60,9 @@ uint32_t RC_Channel::get_value(uint8_t channel)
 
 float RC_Channel::vel_x(int8_t inv)
 {
+#if !defined(RC_MODE_1)
+  inv *= -1;
+#endif
   float    ret = 0.0f;
   uint16_t min = 0;
   uint16_t mid = ADC_CHANNEL_X_MID;

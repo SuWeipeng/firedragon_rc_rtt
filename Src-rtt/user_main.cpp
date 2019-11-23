@@ -1,6 +1,5 @@
 #include "RC_Channel.h"
 
-extern ADC_HandleTypeDef hadc1;
 extern vel_target vel;
 
 RC_Channel* rc;
@@ -11,7 +10,7 @@ extern "C" {
 
 void setup(void)
 {
-  rc = new RC_Channel(&hadc1);
+  rc = new RC_Channel();
 }
 
 void loop(void)

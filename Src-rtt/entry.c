@@ -45,7 +45,6 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
-DMA_HandleTypeDef hdma_adc1;
 
 //SPI_HandleTypeDef hspi2;
 
@@ -61,8 +60,8 @@ rt_device_t vcom = RT_NULL;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_ADC1_Init(void);
-static void MX_ADC2_Init(void);
+//static void MX_ADC1_Init(void);
+//static void MX_ADC2_Init(void);
 //static void MX_SPI2_Init(void);
 //static void MX_DMA_Init(void);
 //static void MX_USART1_UART_Init(void);
@@ -106,8 +105,8 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_ADC2_Init();
+//  MX_ADC1_Init();
+//  MX_ADC2_Init();
 //  MX_SPI2_Init();
 //  MX_DMA_Init();
 //  MX_USART1_UART_Init();
@@ -117,6 +116,7 @@ int main(void)
   rt_pin_mode(LED_R_PIN, PIN_MODE_OUTPUT);
   rt_pin_mode(LED_G_PIN, PIN_MODE_OUTPUT);
   rt_pin_write(LED_R_PIN, 1);
+  rt_pin_write(LED_G_PIN, 1);
   
   vcom = rt_device_find("vcom");
   
@@ -131,8 +131,7 @@ int main(void)
   while (1)
   {
     loop();
-    rt_pin_write(LED_G_PIN, !rt_pin_read(LED_G_PIN));
-    rt_thread_delay(500);
+    rt_thread_delay(1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -190,114 +189,114 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-static void MX_ADC1_Init(void)
-{
-
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
-  ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
-  /** Common config 
-  */
-  hadc1.Instance = ADC1;
-  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 4;
-  if (HAL_ADC_Init(&hadc1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_4;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_5;
-  sConfig.Rank = ADC_REGULAR_RANK_2;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_6;
-  sConfig.Rank = ADC_REGULAR_RANK_3;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_7;
-  sConfig.Rank = ADC_REGULAR_RANK_4;
-  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN ADC1_Init 2 */
-
-  /* USER CODE END ADC1_Init 2 */
-
-}
+//static void MX_ADC1_Init(void)
+//{
+//
+//  /* USER CODE BEGIN ADC1_Init 0 */
+//
+//  /* USER CODE END ADC1_Init 0 */
+//
+//  ADC_ChannelConfTypeDef sConfig = {0};
+//
+//  /* USER CODE BEGIN ADC1_Init 1 */
+//
+//  /* USER CODE END ADC1_Init 1 */
+//  /** Common config 
+//  */
+//  hadc1.Instance = ADC1;
+//  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+//  hadc1.Init.ContinuousConvMode = ENABLE;
+//  hadc1.Init.DiscontinuousConvMode = DISABLE;
+//  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+//  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+//  hadc1.Init.NbrOfConversion = 4;
+//  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Regular Channel 
+//  */
+//  sConfig.Channel = ADC_CHANNEL_4;
+//  sConfig.Rank = ADC_REGULAR_RANK_1;
+//  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+//  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Regular Channel 
+//  */
+//  sConfig.Channel = ADC_CHANNEL_5;
+//  sConfig.Rank = ADC_REGULAR_RANK_2;
+//  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Regular Channel 
+//  */
+//  sConfig.Channel = ADC_CHANNEL_6;
+//  sConfig.Rank = ADC_REGULAR_RANK_3;
+//  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Regular Channel 
+//  */
+//  sConfig.Channel = ADC_CHANNEL_7;
+//  sConfig.Rank = ADC_REGULAR_RANK_4;
+//  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN ADC1_Init 2 */
+//
+//  /* USER CODE END ADC1_Init 2 */
+//
+//}
 
 /**
   * @brief ADC2 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_ADC2_Init(void)
-{
-
-  /* USER CODE BEGIN ADC2_Init 0 */
-
-  /* USER CODE END ADC2_Init 0 */
-
-  ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC2_Init 1 */
-
-  /* USER CODE END ADC2_Init 1 */
-  /** Common config 
-  */
-  hadc2.Instance = ADC2;
-  hadc2.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc2.Init.ContinuousConvMode = DISABLE;
-  hadc2.Init.DiscontinuousConvMode = DISABLE;
-  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc2.Init.NbrOfConversion = 1;
-  if (HAL_ADC_Init(&hadc2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_0;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN ADC2_Init 2 */
-
-  /* USER CODE END ADC2_Init 2 */
-
-}
+//static void MX_ADC2_Init(void)
+//{
+//
+//  /* USER CODE BEGIN ADC2_Init 0 */
+//
+//  /* USER CODE END ADC2_Init 0 */
+//
+//  ADC_ChannelConfTypeDef sConfig = {0};
+//
+//  /* USER CODE BEGIN ADC2_Init 1 */
+//
+//  /* USER CODE END ADC2_Init 1 */
+//  /** Common config 
+//  */
+//  hadc2.Instance = ADC2;
+//  hadc2.Init.ScanConvMode = ADC_SCAN_DISABLE;
+//  hadc2.Init.ContinuousConvMode = DISABLE;
+//  hadc2.Init.DiscontinuousConvMode = DISABLE;
+//  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+//  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+//  hadc2.Init.NbrOfConversion = 1;
+//  if (HAL_ADC_Init(&hadc2) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Configure Regular Channel 
+//  */
+//  sConfig.Channel = ADC_CHANNEL_0;
+//  sConfig.Rank = ADC_REGULAR_RANK_1;
+//  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+//  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN ADC2_Init 2 */
+//
+//  /* USER CODE END ADC2_Init 2 */
+//
+//}
 
 /**
   * @brief SPI2 Initialization Function
@@ -411,9 +410,6 @@ static void MX_ADC2_Init(void)
 //  __HAL_RCC_DMA1_CLK_ENABLE();
 //
 //  /* DMA interrupt init */
-//  /* DMA1_Channel1_IRQn interrupt configuration */
-//  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-//  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 //  /* DMA1_Channel5_IRQn interrupt configuration */
 //  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
 //  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);

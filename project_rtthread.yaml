@@ -22,6 +22,7 @@ common:
   - Libraries/rt-thread/components/cplusplus
   - Libraries/rt-thread/components/drivers
   - Libraries/rt-thread/components/drivers/include
+  - Libraries/rt-thread/components/drivers/include/drivers/adc.h
   - Libraries/rt-thread/components/drivers/include/drivers/pin.h
   - Libraries/rt-thread/components/drivers/include/drivers/serial.h
   - Libraries/rt-thread/components/drivers/include/drivers/spi.h
@@ -49,6 +50,7 @@ common:
     - Libraries/rt-thread/components/cplusplus/ThreadCPP.cpp
     - Libraries/rt-thread/components/cplusplus/crt.cpp
     - Libraries/rt-thread/components/cplusplus/crt_init.c
+    - Libraries/rt-thread/components/drivers/misc/adc.c
     - Libraries/rt-thread/components/drivers/misc/pin.c
     - Libraries/rt-thread/components/drivers/serial/serial.c
     - Libraries/rt-thread/components/drivers/spi/spi_core.c
