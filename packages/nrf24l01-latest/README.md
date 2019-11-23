@@ -51,7 +51,7 @@ _**注意：要使样例程序正常运行还需要调整 examples/sample.h 文�
 
 ## 3、使用 nRF24L01
 
-_**使用前务必查看 [user_guide.md](/docs/user_guide.md)**_
+_**使用前务必查看 [user_guide.md](https://github.com/SuWeipeng/firedragon_rc_rtt/blob/master/packages/nrf24l01-latest/docs/user_guide.md)**_
 
 1. 首先进行初始化，假设为轮询 PRX，示例如下:
 
