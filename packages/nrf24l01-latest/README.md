@@ -6,7 +6,7 @@
 
 nRF24L01 是由 NORDIC 生产的工作在 2.4GHz~2.5GHz 的 ISM 频段的单片无线收发器芯片。
 
-> 更多关于 nRF24L01 的信息请参阅 [_features.md_](/docs/features.md) 或 _数据手册_
+> 更多关于 nRF24L01 的信息请参阅 [_features.md_](https://github.com/SuWeipeng/firedragon_rc_rtt/blob/master/packages/nrf24l01-latest/docs/features.md) 或 _数据手册_
 
 ### 1.1 目录结构
 
