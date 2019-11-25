@@ -1,25 +1,28 @@
 #include <entry.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "nrf24l01.h"
 #include "mavlink.h"
 #include "sample.h"
+#include "led.h"
 #include "rtt_interface.h"
 
 #define MAVLINK_VCOM_DEBUG 0
 #define GET_BIT(value, i) ((value)>>i)
 
-
+extern LED_STATUS led_status;
 #if MAVLINK_VCOM_DEBUG == 1
 extern rt_device_t vcom;
 #endif
 
+uint32_t last_timestamp;
 static rt_sem_t nrfirq_sem;
 
 static void _irq_init(void);
 static void _waitirq(void);
 static void _nrf24_param_set();
 
-vel_target vel={.vel_x = 1.0f, .vel_y = 2.0f, .rad_z = 3.0f};
+vel_target vel={.vel_x = 0.0f, .vel_y = 0.0f, .rad_z = 0.0f};
 
 void nrf24l01_mavlink_entry(void *param)
 {
@@ -46,6 +49,8 @@ void nrf24l01_mavlink_entry(void *param)
       uint8_t i;
       mavlink_message_t msg_receive;
       mavlink_status_t mav_status;
+      
+      last_timestamp = HAL_GetTick();
       for(i=0; i<32; i++) {
         if(mavlink_parse_char(0, rbuf[i], &msg_receive, &mav_status)) {
           switch (msg_receive.msgid) {
@@ -53,6 +58,12 @@ void nrf24l01_mavlink_entry(void *param)
             mavlink_simple_t packet;
             mavlink_msg_simple_decode(&msg_receive, &packet);
             
+            uint8_t temp = GET_BIT(packet.data&0x80, 7);
+            if(temp == 1){
+              led_status = LED_BLINK_5Hz;
+            }else{
+              led_status = LED_OFF;
+            }
 #if MAVLINK_VCOM_DEBUG == 1
             char buf[32];
             sprintf(buf, "%d\r\n", packet.data);

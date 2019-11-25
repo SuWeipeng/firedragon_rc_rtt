@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <entry.h>
+#include "led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,6 +55,8 @@ DMA_HandleTypeDef hdma_usart1_rx;
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
+extern LED_STATUS led_status;
+extern uint32_t last_timestamp;
 rt_device_t vcom = RT_NULL;
 /* USER CODE END PV */
 
@@ -131,6 +134,12 @@ int main(void)
   while (1)
   {
     loop();
+    
+    uint32_t timestamp = HAL_GetTick();
+    if(abs(timestamp - last_timestamp) > 500){
+      led_status = LED_ON;
+    }
+    update_led(&led_status, GPIOB, GPIO_PIN_11 | GPIO_PIN_12);
     rt_thread_delay(1);
     /* USER CODE END WHILE */
 
