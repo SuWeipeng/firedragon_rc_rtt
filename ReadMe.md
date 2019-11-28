@@ -6,10 +6,9 @@
 
 1. 【编程语言】使用 C/C++ 混合编程；
 2. 【无线通信】使用 Mavlink 通信协议；
-3. 【RTOS系统】无，使用 RT-Thread 实时操作的代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**；
-4. 【LOG 日志】使用 ArduPilot 日志形式记录软件运行的实时数据；       
-5. 【虚拟串口】使用 RT-Thread 虚拟串口，使用 CubeMX 内的第三方虚拟串口的代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**；
-6. 【nRF24L01】使用 RT-Thread 软件包驱动，使用可以在 STM32 全系列单片机上使用的**裸机驱动**的代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**。
+3. 【RTOS系统】使用 RT-Thread 实时操作系统，裸机代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**；      
+4. 【虚拟串口】使用 RT-Thread 虚拟串口，使用 CubeMX 内的第三方虚拟串口的代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**；
+5. 【nRF24L01】使用 RT-Thread 软件包驱动，使用可以在 STM32 全系列单片机上使用的**裸机驱动**的代码 **[点此链接](https://github.com/SuWeipeng/firedragon_rc)**。
 
 怎样编译
 ---
